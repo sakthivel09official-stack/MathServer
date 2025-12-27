@@ -31,13 +31,99 @@ Create a HTML file to implement form based input and output.
 Publish the website in the given URL.
 
 ## PROGRAM:
+```
+views.py 
 
+from django.shortcuts import render
+def miles(request):
+    km = int(request.POST.get('DISTANCE', 0))
+    l = int(request.POST.get('LITERS', 0))
+    miles = km / l if request.method == 'POST' and l != 0 else 0
+    print("kilometers =", km)
+    print("liters =", l)
+    print("Mileage =", miles)
+    return render(request, 'mathapp/math.html', {'km': km, 'l': l, 'miles':miles})
+
+urls.py
+
+from django.urls import path
+from mathapp import views
+
+urlpatterns = [
+    path('', views.miles, name='miles'),
+]
+
+math.html
+
+<html>
+<head>
+    <title>Mileage Calacutor</title>
+    <title>SAKTHIVEL B (25004373)</title>
+    <style>
+       body
+       {
+        background-color: rgb(34, 255, 0);
+       }
+       .id0
+       {
+        text-align: center;
+        color:rgb(179, 0, 255);
+       }
+       .box
+       {
+        text-align: center;
+        width:60%;
+        background-color: rgb(0, 229, 255);
+        border: solid 5px white;
+        padding:10px;
+        margin:60px auto;
+       }
+       .result
+       {
+        font-weight: bolder;
+       }
+    </style>
+</head>
+<body>
+    <h1 class="id0"><u>Calculate Mileage </u></h1>
+    <div class="box">
+        <h2><u>Mileage Calculator</u></h2>
+        <h3>SAKTHIVEL B (25004373)</h3>
+
+
+        <form method="post">
+
+            {% csrf_token %}
+           
+            <lable>DISTANCE</lable>
+            <br>
+            <input type="number" name="DISTANCE">km
+            <br>
+
+            <lable>LITERS</lable>
+            <br>
+            <input type="number" name="LITERS">l
+            <br>
+
+            <button type="submit">CALCULATE</button>
+            <br>
+
+            <lable>Mileage</lable>
+            <br>
+            <br>
+            <input class="result" type="number" name="Mileage" value={{miles}}>km/l
+            </form>
+    </div>        
+</body>
+    
+</html>
+```
 
 ## OUTPUT - SERVER SIDE:
-
+![alt text](<Screenshot (65).png>)
 
 ## OUTPUT - WEBPAGE:
-
+![alt text](<Screenshot (66).png>)
 
 ## RESULT:
 The a web page to calculate vehicle mileage and fuel efficiency using server-side scripts is created successfully.
